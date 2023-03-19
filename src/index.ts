@@ -33,7 +33,7 @@ async function processFolder(sourceFolder: string) {
 }
 
 async function recognize(filePath: string, file: string) {
-  const outputPath = filePath.replace(`${file}`, '').split('/').slice(2).join('/');
+  const outputPath = filePath.replace(file, '').split('/').slice(2).join('/');
 
   if (file.indexOf('.png') === -1 && file.indexOf('.jpg') === -1 && file.indexOf('.jpeg') === -1) {
     return
