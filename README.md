@@ -12,6 +12,5 @@ To use this script, you must have <a href="https://nodejs.org/en/" target="_new"
 
 ## Usage
 
-1. Place the images to be analyzed in the `test_images` folder. Create one if not present.
-2. Run the script using the command `npm start`.
-3. The script will output the recognized text and its confidence level for each image as a text file in the `output` folder.
+1. Run the script using the command `npm start -s="<SOURCE_FOLDER>" -t="<TARGET_CHARACTER>`. For example, `npm start -s="./test_images" -t="I"`.
+2. The script will output the recognized text and its confidence level for each image as a text file in the `output/<TARGET_CHARACTER>/` folder. Files `_log_<DATE_TIME>.txt` and `_result_<DATE_TIME>.csv` will be created inside the same folder.

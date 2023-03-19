@@ -1,8 +1,10 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/minimist': ^1.2.2
   '@types/node': ^18.15.3
   eslint: ^8.36.0
+  minimist: ^1.2.8
   nodemon: ^2.0.21
   rimraf: ^4.4.0
   tesseract.js: ^4.0.2
@@ -10,10 +12,12 @@ specifiers:
   typescript: ^5.0.2
 
 dependencies:
+  minimist: 1.2.8
   tesseract.js: 4.0.2_eslint@8.36.0
   typescript: 5.0.2
 
 devDependencies:
+  '@types/minimist': 1.2.2
   '@types/node': 18.15.3
   eslint: 8.36.0
   nodemon: 2.0.21
@@ -253,6 +257,10 @@ packages:
 
   /@tsconfig/node16/1.0.3:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
+    dev: true
+
+  /@types/minimist/1.2.2:
+    resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
   /@types/node/18.15.3:
@@ -838,6 +846,10 @@ packages:
     dependencies:
       brace-expansion: 2.0.1
     dev: true
+
+  /minimist/1.2.8:
+    resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+    dev: false
 
   /minipass/4.2.5:
     resolution: {integrity: sha512-+yQl7SX3bIT83Lhb4BVorMAHVuqsskxRdlmO9kTpyukp8vsm2Sn/fUOV9xlnG8/a5JsypJzap21lz/y3FBMJ8Q==}
