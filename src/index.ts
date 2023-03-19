@@ -4,15 +4,16 @@ import parseArgs from 'minimist'
 import path from 'path'
 
 const outputFolder = path.posix.resolve('./similarity/');
-const dateTimeString = new Date().toISOString()
+const dateTimeString = new Date().toISOString().replaceAll(':','_')
 
 async function main() {
   const args = parseArgs(process.argv.slice(2))
-  if (args['s'] === undefined) {
+  const argv = process.platform === 'win32' ? args['_'] : args['s']
+  if (argv === undefined) {
     throw Error('Insufficient parameters to work with.')
   }
 
-  const sourceFolder = args['s'] + '/'
+  const sourceFolder = argv + '/'
   const sFolder = path.posix.resolve(sourceFolder)
   await processFolder(sFolder)
 }
