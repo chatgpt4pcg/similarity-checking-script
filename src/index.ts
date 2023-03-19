@@ -2,7 +2,7 @@ import Tesseract from 'tesseract.js';
 import fs from 'fs'
 import parseArgs from 'minimist'
 
-const outputFolder = './output/';
+const outputFolder = './similarity/';
 const dateTimeString = new Date().toISOString()
 
 async function main() {
