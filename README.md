@@ -12,5 +12,5 @@ To use this script, you must have <a href="https://nodejs.org/en/" target="_new"
 
 ## Usage
 
-1. Run the script using the command `npm start -s="<SOURCE_FOLDER>" -t="<TARGET_CHARACTER> -n=<TRIAL_NUMER>`. For example, `npm start -s="./test_images" -t="I" -n=1`.
-2. The script will output the recognized text and its confidence level for each image as a text file in the `similarity/<TARGET_CHARACTER>/<TRIAL_NUMBER>/` folder. Files `_log_<DATE_TIME>.txt` and `_result_<DATE_TIME>.csv` will be created inside the same folder.
+1. Run the script using the command `npm start -s="<SOURCE_FOLDER>"`. For example, `npm start -s="./test_images"`.
+2. The script will output the recognized text and its confidence level for each image as a text file in the `similarity/<TARGET_CHARACTER>/<TRIAL_NUMBER>/`, which has the same structure as the source folder.. Files `_log_<DATE_TIME>.txt` and `_result_<DATE_TIME>.csv` will be created inside the same folder.
