@@ -7,13 +7,18 @@ const dateTimeString = new Date().toISOString()
 
 async function main() {
   const args = parseArgs(process.argv.slice(2))
+  if (args['s'] === undefined || args['t'] === undefined || args['n'] === undefined) {
+    throw Error('Insufficient parameters to work with.')
+  }
+
   const sourceFolder = args['s'] + '/'
   const targetCharacter = args['t'].toUpperCase()
+  const trialNumber = args['n'].toString()
 
-  await recognize(sourceFolder, targetCharacter)
+  await recognize(sourceFolder, targetCharacter, trialNumber)
 }
 
-async function recognize(sourceFolder: string, targetCharacter: string) {
+async function recognize(sourceFolder: string, targetCharacter: string, trialNumber: string) {
   const files = await fs.promises.readdir(sourceFolder);
   for (const file of files) {
     const { data: { text, confidence } } = await Tesseract.recognize(
@@ -32,15 +37,21 @@ async function recognize(sourceFolder: string, targetCharacter: string) {
       fs.mkdirSync(characterOutputFolder);
     }
 
+    const trialOutputFolder = characterOutputFolder + trialNumber + '/'
+
+    if (!fs.existsSync(trialOutputFolder)) {
+      fs.mkdirSync(trialOutputFolder);
+    }
+
     const outputFileName = file.split('.').slice(0, -1).join('.')
     const logMessage = `${new Date()} - ${outputFileName} - ${text.trim()} - ${confidence}`
     const similarityScore = `${outputFileName},${score(targetCharacter, text.trim(), confidence)}`
 
     console.log(logMessage)
 
-    await fs.promises.writeFile(characterOutputFolder + outputFileName + '.txt', `${text.trim()}\n${confidence}`)
-    await fs.promises.appendFile(characterOutputFolder + `_log_${dateTimeString}.txt`, logMessage + '\n')
-    await fs.promises.appendFile(characterOutputFolder + `_result_${dateTimeString}.csv`, similarityScore + '\n')
+    await fs.promises.writeFile(trialOutputFolder + outputFileName + '.txt', `${text.trim()}\n${confidence}`)
+    await fs.promises.appendFile(trialOutputFolder + `_log_${dateTimeString}.txt`, logMessage + '\n')
+    await fs.promises.appendFile(trialOutputFolder + `_result_${dateTimeString}.csv`, similarityScore + '\n')
   }
 }
 
