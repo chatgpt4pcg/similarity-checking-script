@@ -1,1 +1,0 @@
-[2023-03-21T04_26_26.231768] Processing - team: team2[2023-03-21T04_26_26.232193] Processing - team: team1[2023-03-21T04_26_26.232683] Processing - team: team1 - character: L[2023-03-21T04_26_26.232889] Processing - team: team1 - character: L - trial: V3_L_3.jpg[2023-03-21T04_26_26.516173] Processing - team: team1 - character: L - trial: V3_L_2.png
