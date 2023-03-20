@@ -13,8 +13,8 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"chatgpt4pcg": "^1.0.0",
 		"minimist": "^1.2.8",
-		"tesseract.js": "^4.0.2",
 		"typescript": "^5.0.2"
 	},
 	"devDependencies": {
