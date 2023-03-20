@@ -47,4 +47,3 @@ Please ensure that the source folder has the following structure:
             ├── <TRIAL_NUMBER>.png
             └── <TRIAL_NUMBER>.png
 ```
-```
