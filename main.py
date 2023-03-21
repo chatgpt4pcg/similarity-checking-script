@@ -1,6 +1,7 @@
 import os
 import json
 import string
+from sys import platform
 from pathlib import Path
 from datetime import datetime
 
@@ -106,7 +107,10 @@ def list_characters_dirs(source_folder, stage):
 
 
 def create_output_folder(path, output_folder_name, stage):
-    root, team, folders = str(path).split('/')[0], str(path).split('/')[1], str(path).split('/')[2:-1] # skip the character folder
+    if platform == 'win32':
+        root, team, folders = str(path).split('\\')[0], str(path).split('\\')[1], str(path).split('\\')[2:-1]
+    else:
+        root, team, folders = str(path).split('/')[0], str(path).split('/')[1], str(path).split('/')[2:-1] # skip the character folder
 
     output_dir = Path(root, team, output_folder_name)
     if not os.path.exists(output_dir):
