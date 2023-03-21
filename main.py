@@ -15,7 +15,7 @@ LETTERS_LIST = list(string.ascii_uppercase)
 SOURCE_FOLDER = Path('./competition')
 LOG_FOLDER_NAME = 'logs'
 STAGE = 'images'
-OUTPUT_NAME = 'similarities'
+OUTPUT_NAME = 'similarity'
 START_TIME = str(datetime.now().isoformat()).replace(":", "_")
 
 
@@ -36,6 +36,7 @@ def main():
 
                 output = {
                     'count': len(trials),
+                    'similarityRate': 0,
                     'similarities': []
                 }
 
@@ -46,7 +47,7 @@ def main():
                         trial_log = f'[{str(datetime.now().isoformat()).replace(":", "_")}] Processing - team: {team} - character: {character} - trial: {trial}'
                         append_log(log_folder, trial_log)
                         file_path = Path(path2, trial)
-                        raw_result = predict(file_path)
+                        raw_result = predict(file_path, trial)
                         output['similarities'].append(raw_result)
                         target_prob = search('label', character, raw_result)
                         similarity_rate += target_prob[0]['softmax_prob']
@@ -59,8 +60,8 @@ def main():
                     f.write(json_output)
 
 
-def predict(file):
-    image = Image.open(file)
+def predict(filePath, fileName):
+    image = Image.open(filePath)
     image = image.convert("RGB")
     inputs = processor(images=image, return_tensors="pt")
     outputs = model(**inputs)
@@ -71,6 +72,7 @@ def predict(file):
     for char in LETTERS_LIST:
         target_prob = softmax_outputs[0][ord(char.upper()) - 65]
         output_list.append({
+            'id': fileName,
             'label': char,
             'softmax_prob': target_prob.item()
         })
@@ -104,7 +106,7 @@ def list_characters_dirs(source_folder, stage):
 
 
 def create_output_folder(path, output_folder_name, stage):
-    root, team, folders = str(path).split('/')[0], str(path).split('/')[1], str(path).split('/')[2:]
+    root, team, folders = str(path).split('/')[0], str(path).split('/')[1], str(path).split('/')[2:-1] # skip the character folder
 
     output_dir = Path(root, team, output_folder_name)
     if not os.path.exists(output_dir):

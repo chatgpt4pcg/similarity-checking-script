@@ -20,7 +20,7 @@ To use this script, you must have <a href="https://docs.conda.io/en/latest/" tar
 2. Run `python3 main.py"` to start the similarity checking process.
 3. The script will output the result in JSON format inside the `similarity` folder under the `SOURCE_FOLDER`. Files `similarity_log_<DATE_TIME>.txt` will be created inside `logs` folder.
 
-Please ensure that the source folder has the following structure:
+Please ensure that the source folder is in the same folder as the script and has the following structure:
 
 ```
 <SOURCE_FOLDER>
@@ -28,13 +28,13 @@ Please ensure that the source folder has the following structure:
 |   ├── <STAGE>
 │   │    └── <CHARACTER>
 │   │       ├── <TRIAL_NUMBER>.jpg
-│   │       ├── <TRIAL_NUMBER>.png
-│   │       └── <TRIAL_NUMBER>.jpg
+│   │       ├── <TRIAL_NUMBER>.jpg
+│   │       └── <TRIAL_NUMBER>.png
 │   └── <STAGE>
 │        └── <CHARACTER>
-│           ├── <TRIAL_NUMBER>.png
-│           ├── <TRIAL_NUMBER>.png
-│           └── <TRIAL_NUMBER>.png
+│           ├── <TRIAL_NUMBER>.txt
+│           ├── <TRIAL_NUMBER>.txt
+│           └── <TRIAL_NUMBER>.txt
 └── <TEAM_NAME>
     ├── <STAGE>
     │    └── <CHARACTER>
@@ -43,7 +43,7 @@ Please ensure that the source folder has the following structure:
     │       └── <TRIAL_NUMBER>.jpg
     └── <STAGE>
          └── <CHARACTER>
-            ├── <TRIAL_NUMBER>.png
-            ├── <TRIAL_NUMBER>.png
-            └── <TRIAL_NUMBER>.png
+            ├── <TRIAL_NUMBER>.txt
+            ├── <TRIAL_NUMBER>.txt
+            └── <TRIAL_NUMBER>.txt
 ```
