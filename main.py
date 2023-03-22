@@ -38,6 +38,7 @@ def main():
                 output = {
                     'count': len(trials),
                     'similarityRate': 0,
+                    'trials': [],
                     'similarities': []
                 }
 
@@ -49,8 +50,16 @@ def main():
                         append_log(log_folder, trial_log)
                         file_path = Path(path2, trial)
                         raw_result = predict(file_path, trial)
-                        output['similarities'].append(raw_result)
+                        output['similarities'].append({
+                            'id': trial,
+                            'raws': raw_result
+                        })
                         target_prob = search('label', character, raw_result)
+                        output['trials'].append({
+                            'id': trial,
+                            'label': character,
+                            'similarity': target_prob[0]['softmax_prob']
+                        })
                         similarity_rate += target_prob[0]['softmax_prob']
 
                 output['similarityRate'] = similarity_rate / len(trials)
