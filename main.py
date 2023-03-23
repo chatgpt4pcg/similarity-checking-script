@@ -14,6 +14,7 @@ model = AutoModelForImageClassification.from_pretrained("pittawat/vit-base-lette
 
 LETTERS_LIST = list(string.ascii_uppercase)
 SOURCE_FOLDER = Path('./competition')
+RESULT_FOLDER_NAME = 'result'
 LOG_FOLDER_NAME = 'logs'
 STAGE = 'images'
 OUTPUT_NAME = 'similarity'
@@ -99,7 +100,7 @@ def list_all_dirs(source_folder):
         out = []
         for t in temp:
             path = Path(source_folder, t)
-            if os.path.isdir(path) and not t.startswith('.') and t != LOG_FOLDER_NAME:
+            if os.path.isdir(path) and not t.startswith('.') and t != LOG_FOLDER_NAME and t != RESULT_FOLDER_NAME:
                 out.append(t)
         return out
 
