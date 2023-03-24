@@ -107,7 +107,11 @@ def list_all_dirs(source_folder):
 
 def list_all_files(source_folder):
     for (_, _, filenames) in os.walk(source_folder):
-        return filenames
+        temp = []
+        for filename in filenames:
+            if not filename.endswith('_raw.png.png'):
+                temp.append(filename)
+        return temp
 
 
 def list_characters_dirs(source_folder, stage):
