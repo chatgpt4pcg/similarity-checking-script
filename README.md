@@ -12,7 +12,6 @@ To use this script, you must have <a href="https://docs.conda.io/en/latest/" tar
 2. Navigate to the repository directory in your terminal.
 3. Create the new conda environment or use an existing one by running `conda create -n chatgpt4pcg python=3.11`. Then activate the environment by running `conda activate chatgpt4pcg`.
 4. Run `pip3 install -r requirements.txt` to install the necessary dependencies.
-5. Run `pip3 install git+https://github.com/huggingface/transformers` to install the latest version of `transformers` from source. This is to prevent an unknown error when importing `AutoImageProcessor` from the package.
 
 ## Usage
 
