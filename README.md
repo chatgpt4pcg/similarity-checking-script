@@ -15,11 +15,10 @@ To use this script, you must have <a href="https://docs.conda.io/en/latest/" tar
 
 ## Usage
 
-1. Changing the variable `SOURCE_FOLDER` to your destination folder. Make sure the folder has the structure as described below.
-2. Run `python3 main.py"` to start the similarity checking process.
-3. The script will output the result in JSON format inside the `similarity` folder under the `SOURCE_FOLDER`. Files `similarity_log_<DATE_TIME>.txt` will be created inside `logs` folder.
+1. Run `python3 main.py -s "<SOURCE_FOLDER>"` to start the similarity checking process. For example, `python3 main.py -s "./competition"`.
+2. The script will output the result in JSON format inside the `similarity` folder under the `<SOURCE_FOLDER>/<TEAM_FOLDER>/<CHARACTER>/similarity`. Files `similarity_log_<DATE_TIME>.txt` will be created inside `logs` folder.
 
-Please ensure that the source folder is in the same folder as the script and has the following structure:
+Please ensure that the source folder has the following structure:
 
 ```
 <SOURCE_FOLDER>
@@ -46,3 +45,39 @@ Please ensure that the source folder is in the same folder as the script and has
             ├── <TRIAL_NUMBER>.txt
             └── <TRIAL_NUMBER>.txt
 ```
+
+For example,
+
+```
+competition
+├── team1
+|   ├── images
+│   │    └── I
+│   │       ├── team1_I_1.jpg
+│   │       ├── team1_I_2.jpg
+│   │       └── team1_I_3.png
+│   └── intermediate
+│        └── I
+│           ├── team1_I_1.txt
+│           ├── team1_I_2.txt
+│           └── team1_I_3.txt
+└── team2
+    ├── images
+    │    └── A
+    │       ├── team2_A_1.jpg
+    │       ├── team2_A_2.png
+    │       └── team2_A_3.jpg
+    └── raw
+         └── B
+            ├── team2_B_1.txt
+            ├── team2_B_2.txt
+            └── team2_B_3.txt
+```
+
+## Contributing
+
+If you would like to contribute to this project, please fork this repository and submit a pull request. Please ensure that your code is well documented and that you have tested your code before submitting a pull request.
+
+## Bug Reporting
+
+If you find any bugs, please submit an issue on this repository.
