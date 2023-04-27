@@ -18,6 +18,8 @@ To use this script, you must have <a href="https://docs.conda.io/en/latest/" tar
 1. Run `python3 main.py -s "<SOURCE_FOLDER>"` to start the similarity checking process. For example, `python3 main.py -s "./competition"`.
 2. The script will output the result in JSON format inside the `similarity` folder under the `<SOURCE_FOLDER>/<TEAM_FOLDER>/<CHARACTER>/similarity`. Files `similarity_log_<DATE_TIME>.txt` will be created inside `logs` folder.
 
+Please note that `<STAGE>` can be `raw`, `intermediate`, `levels`, `images`, `stability`, or `similarity`. `<CHARACTER>` can be `A`, `B`, `C`, ..., `Z`.
+
 Please ensure that the source folder has the following structure:
 
 ```
