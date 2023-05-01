@@ -119,7 +119,7 @@ def list_all_files(source_folder):
     for (_, _, filenames) in os.walk(source_folder):
         temp = []
         for filename in filenames:
-            if not filename.endswith('_raw.png.png'):
+            if not filename.endswith('_raw.png'):
                 temp.append(filename)
         return temp
 
