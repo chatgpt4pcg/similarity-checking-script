@@ -1,13 +1,12 @@
 # Similarity Checking Script
 
 This repository contains a script for checking the similarity of text in images using
-a [fine-tuned version of `vit-base-patch16-224-in21k`](https://huggingface.co/pittawat/vit-base-letter) trained on a
-subset of
-the [port of CSV version](https://www.kaggle.com/datasets/sachinpatel21/az-handwritten-alphabets-in-csv-format)
-of [NIST Special Database 19](https://huggingface.co/datasets/pittawat/letter_recognition).
+a [fine-tuned version of `vit-base-patch16-224-in21k`](https://huggingface.co/pittawat/vit-base-letter) trained on [a
+generated dataset](https://huggingface.co/datasets/pittawat/uppercase-english-characters) of letters from various
+typefaces.
 
 You can try an online demo of the model
-at [https://huggingface.co/spaces/pittawat/letter_recognizer](https://huggingface.co/spaces/pittawat/letter_recognizer).
+at [https://huggingface.co/spaces/pittawat/vit-base-uppercase-english-characters](https://huggingface.co/spaces/pittawat/letter_recognizer).
 
 ## Installation
 
