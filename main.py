@@ -1,16 +1,24 @@
-import os
+import getopt
 import json
+import os
 import string
-import sys, getopt
-from pathlib import Path
+import sys
 from datetime import datetime
+from pathlib import Path
 
 import torch
 from PIL import Image
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 
-processor = AutoImageProcessor.from_pretrained("pittawat/vit-base-letter")
-model = AutoModelForImageClassification.from_pretrained("pittawat/vit-base-letter")
+device = torch.device("cpu")
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+elif torch.backends.mps.is_available():
+    device = torch.device("mps")
+
+MODEL_NAME = 'pittawat/vit-base-uppercase-english-characters'
+processor = AutoImageProcessor.from_pretrained(MODEL_NAME)
+model = AutoModelForImageClassification.from_pretrained(MODEL_NAME).to(device)
 
 LETTERS_LIST = list(string.ascii_uppercase)
 RESULT_FOLDER_NAME = 'result'
@@ -36,15 +44,15 @@ def main(argv):
     teams = list_all_dirs(source_folder)
     for team in teams:
         team_log = f'[{str(datetime.now().isoformat())}] Processing - team: {team}'
-        append_log(log_folder, team_log)
+        append_log(str(log_folder), team_log)
         path1 = Path(source_folder, team)
-        characters = list_characters_dirs(path1, INPUT_STAGE)
+        characters = list_characters_dirs(str(path1), INPUT_STAGE)
         if characters is not None:
             for character in characters:
                 character_log = f'[{str(datetime.now().isoformat())}] Processing - team: {team} - character: {character}'
-                append_log(log_folder, character_log)
+                append_log(str(log_folder), character_log)
                 path2 = Path(path1, INPUT_STAGE, character)
-                trials = list_all_files(path2)
+                trials = list_all_files(str(path2))
 
                 output = {
                     'count': len(trials),
@@ -57,10 +65,11 @@ def main(argv):
 
                 if trials is not None:
                     for trial in trials:
-                        trial_log = f'[{str(datetime.now().isoformat())}] Processing - team: {team} - character: {character} - trial: {trial}'
-                        append_log(log_folder, trial_log)
+                        trial_log = (f'[{str(datetime.now().isoformat())}] Processing - team: {team} - character: '
+                                     f'{character} - trial: {trial}')
+                        append_log(str(log_folder), trial_log)
                         file_path = Path(path2, trial)
-                        raw_result = predict(file_path, trial)
+                        raw_result = predict(str(file_path), trial)
                         output['similarities'].append({
                             'id': trial,
                             'raws': raw_result
@@ -75,16 +84,16 @@ def main(argv):
 
                 output['similarityRate'] = similarity_rate / len(trials)
                 json_output = json.dumps(output, indent=2)
-                output_path = create_output_folder(path2, CURRENT_STAGE, INPUT_STAGE)
+                output_path = create_output_folder(str(path2), CURRENT_STAGE, INPUT_STAGE)
                 output_file_path = Path(output_path, f'{character}.json')
                 with open(output_file_path, 'w') as f:
                     f.write(json_output)
 
 
-def predict(filePath, fileName):
-    image = Image.open(filePath)
+def predict(file_path: str, file_name: str):
+    image = Image.open(file_path)
     image = image.convert("RGB")
-    inputs = processor(images=image, return_tensors="pt")
+    inputs = processor(images=image, return_tensors="pt").to(device)
     outputs = model(**inputs)
     logits = outputs.logits
     softmax_outputs = torch.nn.Softmax(dim=-1)(logits)
@@ -93,7 +102,7 @@ def predict(filePath, fileName):
     for char in LETTERS_LIST:
         target_prob = softmax_outputs[0][ord(char.upper()) - 65]
         output_list.append({
-            'id': fileName,
+            'id': file_name,
             'label': char,
             'softmax_prob': target_prob.item()
         })
@@ -104,7 +113,7 @@ def search(key, val, arr):
     return [el for el in arr if el[key] == val]
 
 
-def list_all_dirs(source_folder):
+def list_all_dirs(source_folder: str):
     for (_, dirnames, _) in os.walk(source_folder):
         temp = dirnames
         out = []
@@ -115,7 +124,7 @@ def list_all_dirs(source_folder):
         return out
 
 
-def list_all_files(source_folder):
+def list_all_files(source_folder: str):
     for (_, _, filenames) in os.walk(source_folder):
         temp = []
         for filename in filenames:
@@ -124,17 +133,19 @@ def list_all_files(source_folder):
         return temp
 
 
-def list_characters_dirs(source_folder, stage):
+def list_characters_dirs(source_folder: str, stage: str):
     path = Path(source_folder, stage)
-    characters = list_all_dirs(path)
+    characters = list_all_dirs(str(path))
     return characters
 
 
-def create_output_folder(path, output_folder_name, stage):
+def create_output_folder(path: str, output_folder_name: str, stage: str):
     if sys.platform == 'win32':
-        root, team, stage_folder = "\\".join(str(path).split('\\')[0:-3]), str(path).split('\\')[-3], str(path).split('\\')[-2:-1]
+        root, team, stage_folder = "\\".join(str(path).split('\\')[0:-3]), str(path).split('\\')[-3], str(path).split(
+            '\\')[-2:-1]
     else:
-        root, team, stage_folder = "/".join(str(path).split('/')[0:-3]), str(path).split('/')[-3], str(path).split('/')[-2:-1]
+        root, team, stage_folder = "/".join(str(path).split('/')[0:-3]), str(path).split('/')[-3], str(path).split('/')[
+                                                                                                   -2:-1]
 
     output_dir = Path(root, team, output_folder_name)
     if not os.path.exists(output_dir):
@@ -150,14 +161,14 @@ def create_output_folder(path, output_folder_name, stage):
     return current_dir
 
 
-def create_log_folder(source_folder):
+def create_log_folder(source_folder: str):
     output_dir = Path(source_folder, LOG_FOLDER_NAME)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     return output_dir
 
 
-def append_log(log_folder_path, log):
+def append_log(log_folder_path: str, log: str):
     print(log)
     log_file_path = Path(log_folder_path, f'similarity_log_{START_TIME}.txt')
     if not os.path.exists(log_file_path):
