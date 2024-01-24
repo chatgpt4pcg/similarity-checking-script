@@ -25,10 +25,10 @@ system.
    example, `python3 main.py -s "./competition"`. In some cases, you may need to
    run `python main.py -s "./competition"` (`python` without `3`) instead.
 2. The script will output the result in JSON format inside the `similarity` folder under
-   the `<SOURCE_FOLDER>/<TEAM_FOLDER>/<CHARACTER>/similarity`. Files `similarity_log_<DATE_TIME>.txt` will be created
+   the `<SOURCE_FOLDER>/<TEAM_FOLDER>/<CHARACTER>/similarity`. A file `similarity_log_<DATE_TIME>.txt` will be created
    inside `logs` folder.
 
-Please note that `<STAGE>` can be `raw`, `intermediate`, `levels`, `images`, `stability`, or `similarity`. `<CHARACTER>`
+Please note that `<STAGE>` can be `raw`, `intermediate`, `levels`, `images`, `stability`, `similarity`, or `diversity`. `<CHARACTER>`
 can be `A`, `B`, `C`, ..., `Z`.
 
 Please ensure that the source folder has the following structure:
