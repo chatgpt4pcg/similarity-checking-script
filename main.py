@@ -80,7 +80,6 @@ def main(argv):
                             'id': trial,
                             'label': character,
                             'similarity': target_prob[0]['softmax_prob'],
-                            'cls_embedding': cls_emb
                         })
                         similarity_rate += target_prob[0]['softmax_prob']
 
