@@ -69,16 +69,17 @@ def main(argv):
                                      f'{character} - trial: {trial}')
                         append_log(str(log_folder), trial_log)
                         file_path = Path(path2, trial)
-                        raw_result = predict(str(file_path), trial)
+                        raw_result, cls_emb = predict(file_path, trial)
                         output['similarities'].append({
                             'id': trial,
-                            'raws': raw_result
+                            'raws': raw_result,
+                            'cls_embedding': cls_emb
                         })
                         target_prob = search('label', character, raw_result)
                         output['trials'].append({
                             'id': trial,
                             'label': character,
-                            'similarity': target_prob[0]['softmax_prob']
+                            'similarity': target_prob[0]['softmax_prob'],
                         })
                         similarity_rate += target_prob[0]['softmax_prob']
 
@@ -94,9 +95,13 @@ def predict(file_path: str, file_name: str):
     image = Image.open(file_path)
     image = image.convert("RGB")
     inputs = processor(images=image, return_tensors="pt").to(device)
-    outputs = model(**inputs)
+    outputs = model(**inputs, output_hidden_states=True)
     logits = outputs.logits
     softmax_outputs = torch.nn.Softmax(dim=-1)(logits)
+    
+    last_hidden = outputs.hidden_states[-1]
+    cls_embedding = last_hidden[:, 0, :].detach().cpu()  # shape (1, hidden_dim)
+    emb_list = cls_embedding.squeeze(0).tolist()
 
     output_list = []
     for char in LETTERS_LIST:
@@ -106,7 +111,7 @@ def predict(file_path: str, file_name: str):
             'label': char,
             'softmax_prob': target_prob.item()
         })
-    return output_list
+    return output_list, emb_list
 
 
 def search(key, val, arr):
